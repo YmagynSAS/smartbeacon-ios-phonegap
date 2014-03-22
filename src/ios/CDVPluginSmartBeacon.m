@@ -44,6 +44,8 @@
     {
         NSLog(@"SBLocationManagerDelegate: did enter region");
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [result setKeepCallback:[NSNumber numberWithBool:YES]];
+
         [self.commandDelegate sendPluginResult:result callbackId:self.didEnterRegionCallBackId];
     }
 }
@@ -56,6 +58,8 @@
     {
         NSLog(@"SBLocationManagerDelegate: did exit region");
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [result setKeepCallback:[NSNumber numberWithBool:YES]];
+
         [self.commandDelegate sendPluginResult:result callbackId:self.didExitRegionCallBackId];
     }
 }
@@ -70,6 +74,8 @@
         // Does the callback need to know all beacons discovered or only the nearest ? Y: return `nearestBeacon` as json object / N: return `beacons` as json array
         NSLog(@"SBLocationManagerDelegate: did discover beacons");
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [result setKeepCallback:[NSNumber numberWithBool:YES]];
+
         [self.commandDelegate sendPluginResult:result callbackId:self.didDiscoverRegionCallBackId];
     }
 }

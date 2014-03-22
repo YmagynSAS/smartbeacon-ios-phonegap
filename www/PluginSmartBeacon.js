@@ -50,7 +50,7 @@ PluginSmartBeacon.prototype.didEnterRegion = function(callback){
         return;
     }
     
-    cordova.exec(successCallback, function(error) {}, 'CDVPluginSmartBeacon', 'didEnterRegion', []);
+    cordova.exec(callback, function(error) {}, 'CDVPluginSmartBeacon', 'didEnterRegion', []);
 };
 
 /**
@@ -64,7 +64,7 @@ PluginSmartBeacon.prototype.didExitRegion = function(callback) {
         return;
     }
 
-    cordova.exec(successCallback, function(error) {}, 'CDVPluginSmartBeacon', 'didExitRegion', []);
+    cordova.exec(callback, function(error) {}, 'CDVPluginSmartBeacon', 'didExitRegion', []);
     
 };
 
