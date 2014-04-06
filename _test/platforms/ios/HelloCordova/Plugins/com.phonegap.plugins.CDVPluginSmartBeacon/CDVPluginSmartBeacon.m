@@ -43,7 +43,13 @@
     if(self.didEnterRegionCallBackId)
     {
         NSLog(@"SBLocationManagerDelegate: did enter region");
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        
+        NSMutableDictionary* dict = [NSMutableDictionary new];
+        [dict setValue:[NSNumber numberWithDouble: region.center.longitude] forKey:@"longitude"];
+        [dict setValue:[NSNumber numberWithDouble: region.center.latitude] forKey:@"longitude"];
+        [dict setValue:[NSNumber numberWithDouble: region.radius] forKey:@"radius"];
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+        
         [result setKeepCallback:[NSNumber numberWithBool:YES]];
         [self.commandDelegate sendPluginResult:result callbackId:self.didEnterRegionCallBackId];
     }
@@ -56,9 +62,14 @@
     if(self.didExitRegionCallBackId)
     {
         NSLog(@"SBLocationManagerDelegate: did exit region");
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        
+        NSMutableDictionary* dict = [NSMutableDictionary new];
+        [dict setValue:[NSNumber numberWithDouble: region.center.longitude] forKey:@"longitude"];
+        [dict setValue:[NSNumber numberWithDouble: region.center.latitude] forKey:@"longitude"];
+        [dict setValue:[NSNumber numberWithDouble: region.radius] forKey:@"radius"];
+        
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
         [result setKeepCallback:[NSNumber numberWithBool:YES]];
-
         [self.commandDelegate sendPluginResult:result callbackId:self.didExitRegionCallBackId];
     }
 }
@@ -69,10 +80,18 @@
     {
         CLBeacon *nearestBeacon = [beacons firstObject];
         NSLog(@"Nearest beacon ID: %@ / %@ / %@", [nearestBeacon proximityUUID], [nearestBeacon major], [nearestBeacon minor]);
+        
+        NSMutableDictionary* dict = [NSMutableDictionary new];
+        [dict setValue:[NSNumber numberWithDouble: region.center.longitude] forKey:@"longitude"];
+        [dict setValue:[NSNumber numberWithDouble: region.center.latitude] forKey:@"longitude"];
+        [dict setValue:[NSNumber numberWithDouble: region.radius] forKey:@"radius"];
+        [dict setValue:beacons forKey:@"beacons"];
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+        [result setKeepCallback:[NSNumber numberWithBool:YES]];
+
 
         // Does the callback need to know all beacons discovered or only the nearest ? Y: return `nearestBeacon` as json object / N: return `beacons` as json array
         //NSLog(@"SBLocationManagerDelegate: did discover beacons");
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [result setKeepCallback:[NSNumber numberWithBool:YES]];
 
         [self.commandDelegate sendPluginResult:result callbackId:self.didDiscoverRegionCallBackId];
